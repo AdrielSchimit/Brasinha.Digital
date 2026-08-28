@@ -1,4 +1,4 @@
-const { sendJson, isAuthenticated, github, slugify, BRANCH } = require('./_lib');
+const { sendJson, isAuthenticated, github, slugify, BRANCH } = require('../../lib/admin-server');
 
 module.exports = async function handler(req, res) {
   if (!isAuthenticated(req)) return sendJson(res, 401, { error: 'Não autorizado.' });
