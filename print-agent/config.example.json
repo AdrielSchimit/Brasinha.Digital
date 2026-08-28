@@ -1,0 +1,10 @@
+{
+  "githubToken": "github_pat_COLOQUE_UM_TOKEN_READ_ONLY_AQUI",
+  "repo": "AdrielSchimit/Brasinha.Digital",
+  "issue": 1,
+  "queueSecret": "MESMO_VALOR_DE_PRINT_QUEUE_SECRET_DA_VERCEL",
+  "printerName": "NOME_EXATO_DA_IMPRESSORA_NO_WINDOWS",
+  "paperWidth": 42,
+  "pollSeconds": 5,
+  "sound": true
+}
