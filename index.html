@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <meta name="theme-color" content="#0f0d0b" />
+  <meta name="description" content="Cardápio digital da Brasinha Pizzaria & Chopperia — Água Clara/MS." />
+  <title>Brasinha — Cardápio Digital</title>
+  <link rel="preload" href="assets/pizza-pepperoni.jpg" as="image" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="hero" id="inicio">
+    <nav class="topbar shell">
+      <a class="brand" href="#inicio" aria-label="Brasinha">
+        <img src="assets/logo-brasinha-premium.png" alt="Brasinha Pizzaria & Chopperia" />
+        <span><strong>BRASINHA</strong><small>Pizzaria & Chopperia</small></span>
+      </a>
+      <button class="cart-top" data-open-cart aria-label="Abrir pedido">Pedido <span data-cart-count>0</span></button>
+    </nav>
+    <div class="shell hero-grid">
+      <div class="hero-copy">
+        <p class="kicker">MASSA ARTESANAL · DESDE 2021</p>
+        <h1>Sabor de verdade.<br><em>Do forno para sua mesa.</em></h1>
+        <p class="hero-text">Monte seu pedido sem cadastro, escolha sabores, faça pizza meia a meia e envie tudo organizado direto no WhatsApp da Brasinha.</p>
+        <div class="hero-actions"><a class="button button-gold" href="#cardapio">Ver cardápio</a><button class="button button-dark" data-open-builder>Montar meia a meia</button></div>
+        <div class="hero-meta"><span>18:00–23:30</span><span>Av. Benevenuto, 747</span><span>Água Clara · MS</span></div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="quick shell" aria-label="Atalhos">
+      <article><span>01</span><div><strong>Escolha</strong><small>Sabores, tamanho e adicionais</small></div></article>
+      <article><span>02</span><div><strong>Finalize</strong><small>Entrega, pagamento e endereço</small></div></article>
+      <article><span>03</span><div><strong>Envie</strong><small>Pedido pronto no WhatsApp</small></div></article>
+    </section>
+
+    <section class="shell spotlight">
+      <div class="spotlight-copy">
+        <p class="eyebrow">DESTAQUE DA CASA</p>
+        <h2>Meia a meia<br>sem complicação.</h2>
+        <p>Escolha dois sabores. O valor é calculado pela metade de cada pizza no tamanho selecionado.</p>
+        <div class="formula"><span>Calabresa R$ 60 ÷ 2</span><b>+</b><span>Gourmet R$ 80 ÷ 2</span><strong>= R$ 70</strong></div>
+        <button class="button button-gold" data-open-builder>Montar minha pizza</button>
+      </div>
+      <div class="spotlight-photo"><img src="assets/pizza-borda.jpg" alt="Pizza Brasinha com borda recheada" /></div>
+    </section>
+
+    <section class="shell menu-wrap" id="cardapio">
+      <div class="menu-head">
+        <div><p class="eyebrow">CARDÁPIO</p><h2>Escolha o que vai pedir</h2></div>
+        <label class="search"><span>⌕</span><input id="search" type="search" placeholder="Buscar sabor ou ingrediente" autocomplete="off" /></label>
+      </div>
+      <div class="tabs" id="tabs" aria-label="Categorias"></div>
+      <div id="menu"></div>
+    </section>
+
+    <section class="shell dessert-banner">
+      <img src="assets/pizza-morango.jpg" alt="Pizza doce de chocolate com morango" />
+      <div><p class="eyebrow">PARA FECHAR</p><h2>Tem doce também.</h2><p>Chocolate, morango, banana, M&M, Ouro Branco e opções de calzone.</p><a href="#doces">Ver doces</a></div>
+    </section>
+
+    <section class="shell info-grid">
+      <article><p class="eyebrow">ENDEREÇO</p><h3>Brasinha Pizzaria & Chopperia</h3><p>Av. Benevenuto, 747<br>Água Clara · MS</p></article>
+      <article><p class="eyebrow">HORÁRIO</p><h3>18:00 às 23:30</h3><p>Consulte disponibilidade em feriados e datas especiais.</p></article>
+      <article><p class="eyebrow">CONTATO</p><h3>(67) 99216-1939</h3><p>@brasinhaac</p></article>
+    </section>
+  </main>
+
+  <button class="cart-bar" data-open-cart><span><b data-cart-count>0</b> <span data-cart-label>Seu pedido está vazio</span></span><strong data-cart-total>R$ 0,00</strong></button>
+
+  <div class="modal" id="pizzaModal" aria-hidden="true">
+    <div class="modal-backdrop" data-close-builder></div>
+    <section class="modal-card builder-card" role="dialog" aria-modal="true" aria-labelledby="builderTitle">
+      <button class="modal-close" data-close-builder aria-label="Fechar">×</button>
+      <p class="eyebrow">MONTE SUA PIZZA</p><h2 id="builderTitle">Inteira ou meia a meia</h2>
+      <div class="segmented" id="builderMode"><button class="active" data-mode="half">Meia a meia</button><button data-mode="full">Inteira</button></div>
+      <div class="builder-fields">
+        <label>Tamanho<select id="pizzaSize"><option value="M">Média</option><option value="G">Grande</option></select></label>
+        <label>1º sabor<select id="flavorA"></select></label>
+        <label id="flavorBWrap">2º sabor<select id="flavorB"></select></label>
+        <label>Borda<select id="pizzaBorder"><option value="">Sem borda adicional</option></select></label>
+      </div>
+      <div class="price-breakdown" id="pizzaBreakdown"></div>
+      <button class="button button-gold full-width" id="addPizza">Adicionar ao pedido</button>
+    </section>
+  </div>
+
+  <div class="drawer-wrap" id="cartDrawer" aria-hidden="true">
+    <div class="drawer-backdrop" data-close-cart></div>
+    <aside class="drawer" aria-label="Meu pedido">
+      <div class="drawer-head"><div><p class="eyebrow">FINALIZAÇÃO</p><h2>Meu pedido</h2></div><button data-close-cart>×</button></div>
+      <div id="cartItems" class="cart-items"></div>
+      <section class="checkout-section"><h3>Recebimento</h3><div class="segmented two" id="fulfillment"><button class="active" data-value="Entrega">Entrega</button><button data-value="Retirada">Retirada</button></div></section>
+      <section class="checkout-section" id="customerSection">
+        <div class="section-line"><h3>Seus dados</h3><small>Salvos neste aparelho</small></div>
+        <div class="form-grid">
+          <label class="span-2">Nome<input id="customerName" autocomplete="name" placeholder="Seu nome" /></label>
+          <label class="span-2">WhatsApp<input id="customerPhone" inputmode="tel" autocomplete="tel" placeholder="(67) 99999-9999" /></label>
+          <label class="span-2 delivery-field">Endereço<input id="customerStreet" autocomplete="street-address" placeholder="Rua / Avenida" /></label>
+          <label class="delivery-field">Número<input id="customerNumber" inputmode="numeric" placeholder="123" /></label>
+          <label class="delivery-field">Bairro<input id="customerNeighborhood" list="neighborhoodList" placeholder="Seu bairro" /><datalist id="neighborhoodList"></datalist></label>
+          <label class="span-2 delivery-field">Referência / complemento<input id="customerReference" placeholder="Opcional" /></label>
+        </div><div id="deliveryFeeStatus" class="fee-status"></div>
+      </section>
+      <section class="checkout-section"><h3>Pagamento</h3><div class="payment-grid" id="paymentMethods"><button class="active" data-value="Pix">Pix</button><button data-value="Cartão">Cartão</button><button data-value="Dinheiro">Dinheiro</button></div><label id="cashChangeWrap" class="cash-change hidden">Troco para<input id="cashChange" inputmode="decimal" placeholder="Ex.: 100" /></label></section>
+      <section class="checkout-section"><label>Observação<textarea id="orderNotes" rows="3" placeholder="Ex.: sem cebola, tocar campainha..."></textarea></label></section>
+      <div class="totals"><div><span>Subtotal</span><strong id="subtotal">R$ 0,00</strong></div><div><span>Taxa de entrega</span><strong id="deliveryFee">—</strong></div><div class="grand"><span>Total</span><strong id="grandTotal">R$ 0,00</strong></div></div>
+      <button class="send-order" id="sendOrder">Finalizar pedido no WhatsApp</button>
+      <p class="privacy-note">Os dados ficam salvos somente neste navegador para facilitar seus próximos pedidos.</p>
+    </aside>
+  </div>
+
+  <footer><div class="shell"><strong>BRASINHA</strong><span>Pizzaria & Chopperia · Água Clara/MS</span></div></footer>
+  <script src="data.js"></script><script src="app.js"></script>
+</body>
+</html>
