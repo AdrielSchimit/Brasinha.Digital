@@ -1,4 +1,4 @@
-const { sendJson, safeEqual, sessionValue, authCookie } = require('./_lib');
+const { sendJson, safeEqual, sessionValue, authCookie } = require('../../lib/admin-server');
 
 module.exports = async function handler(req, res) {
   if (req.method !== 'POST') return sendJson(res, 405, { error: 'Método não permitido.' });
