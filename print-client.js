@@ -62,3 +62,11 @@
   const button = document.querySelector('#sendOrder');
   if(button) button.onclick = sendOrder;
 })();
+
+// UX V4 é carregada por último para simplificar a experiência sem tocar no fluxo de impressão.
+(function(){
+  if(!document.querySelector('link[href="ux-v4.css"]')){
+    const css=document.createElement('link');css.rel='stylesheet';css.href='ux-v4.css';document.head.appendChild(css);
+  }
+  const js=document.createElement('script');js.src='ux-v4.js';js.defer=false;document.body.appendChild(js);
+})();
