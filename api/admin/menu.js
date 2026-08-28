@@ -1,4 +1,4 @@
-const { sendJson, isAuthenticated, readCatalog, writeCatalog } = require('./_lib');
+const { sendJson, isAuthenticated, readCatalog, writeCatalog } = require('../../lib/admin-server');
 
 module.exports = async function handler(req, res) {
   if (!isAuthenticated(req)) return sendJson(res, 401, { error: 'Não autorizado.' });
