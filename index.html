@@ -10,84 +10,108 @@
   <link rel="manifest" href="manifest.webmanifest" />
   <link rel="stylesheet" href="styles.css" />
   <link rel="stylesheet" href="ux.css" />
-  <style>.hero{background-image:linear-gradient(90deg,rgba(10,9,8,.96) 0%,rgba(10,9,8,.82) 38%,rgba(10,9,8,.24) 72%,rgba(10,9,8,.6) 100%),linear-gradient(0deg,#0e0d0b 0%,transparent 28%),url('https://images.unsplash.com/photo-1574071318508-1cdbab80d002?auto=format&fit=crop&w=1800&q=85')!important}</style>
 </head>
 <body>
-  <header class="hero" id="inicio">
+  <header class="hero compact-hero" id="inicio">
     <nav class="topbar shell">
-      <a class="brand" href="#inicio" aria-label="Brasinha"><img src="assets/logo.svg" alt="Brasinha Pizzaria & Chopperia" /><span><strong>BRASINHA</strong><small>Pizzaria & Chopperia</small></span></a>
-      <button class="cart-top" data-open-cart aria-label="Abrir pedido">Pedido <span data-cart-count>0</span></button>
+      <a class="brand" href="#inicio" aria-label="Brasinha">
+        <img src="assets/logo.svg" alt="Brasinha Pizzaria & Chopperia" />
+        <span><strong>BRASINHA</strong><small>Pizzaria & Chopperia</small></span>
+      </a>
+      <div class="top-actions">
+        <a class="social-icon whatsapp" href="https://wa.me/5567992161939" target="_blank" rel="noopener" aria-label="WhatsApp da Brasinha">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.52 3.48A11.82 11.82 0 0 0 12.08 0C5.54 0 .22 5.32.22 11.86c0 2.09.55 4.13 1.6 5.93L.12 24l6.36-1.67a11.84 11.84 0 0 0 5.59 1.42h.01c6.54 0 11.86-5.32 11.86-11.86 0-3.17-1.23-6.15-3.42-8.41Zm-8.44 18.27h-.01a9.83 9.83 0 0 1-5.01-1.37l-.36-.21-3.77.99 1.01-3.68-.23-.38a9.82 9.82 0 0 1-1.5-5.24c0-5.44 4.43-9.87 9.88-9.87a9.8 9.8 0 0 1 6.98 2.9 9.8 9.8 0 0 1 2.89 6.99c0 5.44-4.43 9.87-9.88 9.87Zm5.42-7.4c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.17-.17.2-.35.22-.65.07-.3-.15-1.25-.46-2.39-1.48-.88-.79-1.48-1.76-1.65-2.06-.17-.3-.02-.46.13-.61.13-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.07-.15-.67-1.61-.91-2.21-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.79.37-.27.3-1.04 1.02-1.04 2.48 0 1.46 1.07 2.88 1.21 3.08.15.2 2.1 3.21 5.08 4.5.71.31 1.26.49 1.69.63.71.23 1.36.2 1.87.12.57-.08 1.76-.72 2.01-1.41.25-.7.25-1.29.17-1.41-.07-.13-.27-.2-.57-.35Z"/></svg>
+        </a>
+        <a class="social-icon instagram" href="https://www.instagram.com/brasinhaac/" target="_blank" rel="noopener" aria-label="Instagram da Brasinha">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7.75 2h8.5A5.76 5.76 0 0 1 22 7.75v8.5A5.76 5.76 0 0 1 16.25 22h-8.5A5.76 5.76 0 0 1 2 16.25v-8.5A5.76 5.76 0 0 1 7.75 2Zm0 2A3.75 3.75 0 0 0 4 7.75v8.5A3.75 3.75 0 0 0 7.75 20h8.5A3.75 3.75 0 0 0 20 16.25v-8.5A3.75 3.75 0 0 0 16.25 4h-8.5ZM17.5 5.5a1.25 1.25 0 1 1 0 2.5 1.25 1.25 0 0 1 0-2.5ZM12 7a5 5 0 1 1 0 10 5 5 0 0 1 0-10Zm0 2a3 3 0 1 0 0 6 3 3 0 0 0 0-6Z"/></svg>
+        </a>
+        <button class="cart-top" data-open-cart aria-label="Abrir pedido">Pedido <span data-cart-count>0</span></button>
+      </div>
     </nav>
-    <div class="shell hero-grid"><div class="hero-copy">
-      <p class="kicker">MASSA ARTESANAL · DESDE 2021</p>
-      <h1>Sabor de verdade.<br><em>Do forno para sua mesa.</em></h1>
-      <p class="hero-text">Escolha, monte e finalize seu pedido pelo site. Seus dados ficam salvos neste aparelho para os próximos pedidos.</p>
-      <div class="hero-actions"><a class="button button-gold" href="#cardapio">Ver cardápio</a><button class="button button-dark" data-open-builder>Montar pizza</button></div>
-      <div class="hero-meta"><span>18:00–23:30</span><span>Av. Benevenuto, 747</span><span>Água Clara · MS</span></div>
-    </div></div>
+
+    <div class="shell hero-grid compact-grid">
+      <div class="hero-copy compact-copy">
+        <div class="business-status"><span class="status-dot"></span> Aberto · 18:00–23:30</div>
+        <h1>Brasinha</h1>
+        <p class="hero-subtitle">Pizzaria & Chopperia · Água Clara/MS</p>
+        <p class="hero-address">Av. Benevenuto, 747</p>
+        <div class="hero-actions">
+          <a class="button button-gold" href="#cardapio">Ver cardápio</a>
+          <button class="button button-dark" data-open-builder>Montar pizza</button>
+        </div>
+      </div>
+    </div>
   </header>
 
   <main>
-    <section class="quick shell" aria-label="Como pedir">
-      <article><span>01</span><div><strong>Escolha</strong><small>Pizza, lanche, bebida e adicionais</small></div></article>
-      <article><span>02</span><div><strong>Monte</strong><small>Inteira, meia a meia e borda</small></div></article>
-      <article><span>03</span><div><strong>Finalize</strong><small>Entrega ou retirada pelo WhatsApp</small></div></article>
-    </section>
-
     <section class="shell menu-wrap" id="cardapio">
-      <div class="menu-head"><div><p class="eyebrow">CARDÁPIO</p><h2>O que vai pedir hoje?</h2></div><label class="search"><span>⌕</span><input id="search" type="search" placeholder="Buscar sabor ou ingrediente" autocomplete="off" /></label></div>
-      <div class="tabs" id="tabs" aria-label="Categorias"></div><div id="menu"></div>
+      <div class="menu-head">
+        <div><p class="eyebrow">CARDÁPIO</p><h2>Escolha seu pedido</h2></div>
+        <label class="search"><span>⌕</span><input id="search" type="search" placeholder="Buscar sabor ou ingrediente" autocomplete="off" /></label>
+      </div>
+      <div class="tabs" id="tabs" aria-label="Categorias"></div>
+      <div id="menu"></div>
     </section>
 
-    <section class="shell dessert-banner"><img src="https://images.unsplash.com/photo-1579751626657-72bc17010498?auto=format&fit=crop&w=1200&q=85" alt="Pizza artesanal" /><div><p class="eyebrow">PARA FECHAR</p><h2>Tem doce também.</h2><p>Chocolate, morango, banana, M&M, Ouro Branco e opções de calzone.</p><a href="#doces">Ver doces</a></div></section>
-
-    <section class="shell info-grid"><article><p class="eyebrow">ENDEREÇO</p><h3>Brasinha Pizzaria & Chopperia</h3><p>Av. Benevenuto, 747<br>Água Clara · MS</p></article><article><p class="eyebrow">HORÁRIO</p><h3>18:00 às 23:30</h3><p>Consulte disponibilidade em feriados e datas especiais.</p></article><article><p class="eyebrow">CONTATO</p><h3>(67) 99216-1939</h3><p>@brasinhaac</p></article></section>
+    <section class="shell contact-strip">
+      <a href="https://wa.me/5567992161939" target="_blank" rel="noopener"><strong>WhatsApp</strong><span>(67) 99216-1939</span></a>
+      <a href="https://www.instagram.com/brasinhaac/" target="_blank" rel="noopener"><strong>Instagram</strong><span>@brasinhaac</span></a>
+      <div><strong>Endereço</strong><span>Av. Benevenuto, 747 · Água Clara/MS</span></div>
+    </section>
   </main>
 
   <button class="cart-bar" data-open-cart><span><b data-cart-count>0</b> <span data-cart-label>Seu pedido está vazio</span></span><strong data-cart-total>R$ 0,00</strong></button>
 
-  <div class="modal" id="pizzaModal" aria-hidden="true"><div class="modal-backdrop" data-close-builder></div><section class="modal-card builder-card" role="dialog" aria-modal="true" aria-labelledby="builderTitle">
-    <button class="modal-close" data-close-builder aria-label="Fechar">×</button>
-    <p class="eyebrow">MONTE SUA PIZZA</p><h2 id="builderTitle">Como você quer?</h2>
-    <div class="segmented" id="builderMode"><button class="active" data-mode="half">Meia a meia</button><button data-mode="full">Inteira</button></div>
-    <div class="builder-fields guided-builder">
-      <label><span class="field-step">1</span> Tamanho<select id="pizzaSize"><option value="M">Média</option><option value="G">Grande</option></select></label>
-      <label><span class="field-step">2</span> Primeiro sabor<select id="flavorA"></select></label>
-      <label id="flavorBWrap"><span class="field-step">3</span> Segundo sabor<select id="flavorB"></select></label>
-      <label><span class="field-step">4</span> Borda <small class="optional">opcional</small><select id="pizzaBorder"><option value="">Sem borda adicional</option></select></label>
-    </div>
-    <div class="price-breakdown" id="pizzaBreakdown"></div>
-    <button class="button button-gold full-width" id="addPizza">Adicionar ao pedido</button>
-  </section></div>
-
-  <div class="drawer-wrap" id="cartDrawer" aria-hidden="true"><div class="drawer-backdrop" data-close-cart></div><aside class="drawer" aria-label="Meu pedido">
-    <div class="drawer-head"><div><p class="eyebrow">FINALIZAR</p><h2>Seu pedido</h2></div><button data-close-cart aria-label="Fechar">×</button></div>
-    <div id="cartItems" class="cart-items"></div>
-
-    <section class="checkout-section checkout-step"><div class="step-title"><b>1</b><div><h3>Como você quer receber?</h3><small>Escolha uma opção</small></div></div><div class="segmented two" id="fulfillment"><button class="active" data-value="Entrega">Entrega</button><button data-value="Retirada">Retirada</button></div></section>
-
-    <section class="checkout-section checkout-step" id="customerSection">
-      <div class="step-title"><b>2</b><div><h3>Seus dados</h3><small>Você preenche uma vez e o aparelho lembra</small></div></div>
-      <div id="savedProfile" class="saved-profile hidden"></div>
-      <button id="editProfile" class="edit-profile hidden" type="button">Editar meus dados</button>
-      <div class="form-grid" id="customerForm">
-        <label class="span-2">Nome<input id="customerName" autocomplete="name" placeholder="Como podemos te chamar?" /></label>
-        <label class="span-2">WhatsApp<input id="customerPhone" inputmode="tel" autocomplete="tel" placeholder="(67) 99999-9999" /></label>
-        <label class="span-2 delivery-field">Rua / Avenida<input id="customerStreet" autocomplete="street-address" placeholder="Ex.: Av. Benevenuto" /></label>
-        <label class="delivery-field">Número<input id="customerNumber" inputmode="numeric" placeholder="747" /></label>
-        <label class="delivery-field">Bairro<input id="customerNeighborhood" list="neighborhoodList" placeholder="Seu bairro" /><datalist id="neighborhoodList"></datalist></label>
-        <label class="span-2 delivery-field">Complemento / referência<input id="customerReference" placeholder="Opcional" /></label>
-      </div><div id="deliveryFeeStatus" class="fee-status"></div>
+  <div class="modal" id="pizzaModal" aria-hidden="true">
+    <div class="modal-backdrop" data-close-builder></div>
+    <section class="modal-card builder-card" role="dialog" aria-modal="true" aria-labelledby="builderTitle">
+      <button class="modal-close" data-close-builder aria-label="Fechar">×</button>
+      <p class="eyebrow">MONTE SUA PIZZA</p>
+      <h2 id="builderTitle">Escolha sua pizza</h2>
+      <div class="segmented" id="builderMode"><button class="active" data-mode="half">Meia a meia</button><button data-mode="full">Inteira</button></div>
+      <div class="builder-fields guided-builder">
+        <label>Tamanho<select id="pizzaSize"><option value="M">Média</option><option value="G">Grande</option></select></label>
+        <label>Primeiro sabor<select id="flavorA"></select></label>
+        <label id="flavorBWrap">Segundo sabor<select id="flavorB"></select></label>
+        <label>Borda <small class="optional">opcional</small><select id="pizzaBorder"><option value="">Sem borda adicional</option></select></label>
+      </div>
+      <div class="price-breakdown" id="pizzaBreakdown"></div>
+      <button class="button button-gold full-width" id="addPizza">Adicionar ao pedido</button>
     </section>
+  </div>
 
-    <section class="checkout-section checkout-step"><div class="step-title"><b>3</b><div><h3>Pagamento</h3><small>Escolha como vai pagar</small></div></div><div class="payment-grid" id="paymentMethods"><button class="active" data-value="Pix">Pix</button><button data-value="Cartão">Cartão</button><button data-value="Dinheiro">Dinheiro</button></div><label id="cashChangeWrap" class="cash-change hidden">Troco para<input id="cashChange" inputmode="decimal" placeholder="Ex.: 100 ou sem troco" /></label></section>
+  <div class="drawer-wrap" id="cartDrawer" aria-hidden="true">
+    <div class="drawer-backdrop" data-close-cart></div>
+    <aside class="drawer" aria-label="Meu pedido">
+      <div class="drawer-head"><div><p class="eyebrow">FINALIZAR</p><h2>Seu pedido</h2></div><button data-close-cart aria-label="Fechar">×</button></div>
+      <div id="cartItems" class="cart-items"></div>
 
-    <section class="checkout-section checkout-step"><div class="step-title"><b>4</b><div><h3>Observação</h3><small>Opcional</small></div></div><label><textarea id="orderNotes" rows="3" placeholder="Ex.: sem cebola, tocar campainha..."></textarea></label></section>
+      <section class="checkout-section checkout-step"><div class="section-heading"><h3>Recebimento</h3><small>Entrega ou retirada</small></div><div class="segmented two" id="fulfillment"><button class="active" data-value="Entrega">Entrega</button><button data-value="Retirada">Retirada</button></div></section>
 
-    <div class="totals"><div><span>Subtotal</span><strong id="subtotal">R$ 0,00</strong></div><div><span>Taxa de entrega</span><strong id="deliveryFee">—</strong></div><div class="grand"><span>Total</span><strong id="grandTotal">R$ 0,00</strong></div></div>
-    <button class="send-order" id="sendOrder">Enviar pedido para a Brasinha</button>
-    <p class="privacy-note">Seus dados ficam salvos somente neste navegador. Você pode editá-los quando quiser.</p>
-  </aside></div>
+      <section class="checkout-section checkout-step" id="customerSection">
+        <div class="section-heading"><h3>Seus dados</h3><small>Preencha uma vez; este aparelho lembra</small></div>
+        <div id="savedProfile" class="saved-profile hidden"></div>
+        <button id="editProfile" class="edit-profile hidden" type="button">Editar meus dados</button>
+        <div class="form-grid" id="customerForm">
+          <label class="span-2">Nome<input id="customerName" autocomplete="name" placeholder="Seu nome" /></label>
+          <label class="span-2">WhatsApp<input id="customerPhone" inputmode="tel" autocomplete="tel" placeholder="(67) 99999-9999" /></label>
+          <label class="span-2 delivery-field">Rua / Avenida<input id="customerStreet" autocomplete="street-address" placeholder="Rua ou avenida" /></label>
+          <label class="delivery-field">Número<input id="customerNumber" inputmode="numeric" placeholder="Nº" /></label>
+          <label class="delivery-field">Bairro<input id="customerNeighborhood" list="neighborhoodList" placeholder="Bairro" /><datalist id="neighborhoodList"></datalist></label>
+          <label class="span-2 delivery-field">Complemento / referência<input id="customerReference" placeholder="Opcional" /></label>
+        </div>
+        <div id="deliveryFeeStatus" class="fee-status"></div>
+      </section>
+
+      <section class="checkout-section checkout-step"><div class="section-heading"><h3>Pagamento</h3><small>Escolha uma opção</small></div><div class="payment-grid" id="paymentMethods"><button class="active" data-value="Pix">Pix</button><button data-value="Cartão">Cartão</button><button data-value="Dinheiro">Dinheiro</button></div><label id="cashChangeWrap" class="cash-change hidden">Troco para<input id="cashChange" inputmode="decimal" placeholder="Ex.: 100 ou sem troco" /></label></section>
+
+      <section class="checkout-section checkout-step"><div class="section-heading"><h3>Observação</h3><small>Opcional</small></div><label><textarea id="orderNotes" rows="3" placeholder="Ex.: sem cebola, tocar campainha..."></textarea></label></section>
+
+      <div class="totals"><div><span>Subtotal</span><strong id="subtotal">R$ 0,00</strong></div><div><span>Taxa de entrega</span><strong id="deliveryFee">—</strong></div><div class="grand"><span>Total</span><strong id="grandTotal">R$ 0,00</strong></div></div>
+      <button class="send-order" id="sendOrder">Enviar pedido para a Brasinha</button>
+      <p class="privacy-note">Seus dados ficam salvos somente neste navegador.</p>
+    </aside>
+  </div>
 
   <footer><div class="shell"><strong>BRASINHA</strong><span>Pizzaria & Chopperia · Água Clara/MS</span></div></footer>
   <script src="data.js"></script><script src="assets-overrides.js"></script><script src="app.js"></script><script src="post-overrides.js"></script>
