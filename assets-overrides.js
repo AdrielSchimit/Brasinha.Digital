@@ -12,3 +12,11 @@ Object.assign(CATEGORY_IMAGES, {
   drinks:'https://images.unsplash.com/photo-1551024506-0bccd828d307?auto=format&fit=crop&w=900&q=82',
   soda:'https://images.unsplash.com/photo-1544145945-f90425340c7e?auto=format&fit=crop&w=900&q=82'
 });
+
+// Carrega a integração da fila somente depois que app.js e post-overrides.js terminarem.
+window.addEventListener('DOMContentLoaded',()=>{
+  const script=document.createElement('script');
+  script.src='print-client.js';
+  script.async=false;
+  document.body.appendChild(script);
+});
