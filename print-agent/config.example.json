@@ -3,7 +3,7 @@
   "repo": "AdrielSchimit/Brasinha.Digital",
   "issue": 1,
   "queueSecret": "MESMO_VALOR_DE_PRINT_QUEUE_SECRET_DA_VERCEL",
-  "printerName": "NOME_EXATO_DA_IMPRESSORA_NO_WINDOWS",
+  "printerName": "MP-4200 TH",
   "paperWidth": 42,
   "pollSeconds": 5,
   "sound": true
