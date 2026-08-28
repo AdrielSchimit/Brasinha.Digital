@@ -23,6 +23,7 @@
         street: document.querySelector('#customerStreet').value.trim(),
         number: document.querySelector('#customerNumber').value.trim(),
         neighborhood: document.querySelector('#customerNeighborhood').value.trim(),
+        cep: document.querySelector('#customerCep')?.value.trim()||'',
         reference: document.querySelector('#customerReference').value.trim()
       },
       fulfillment,
@@ -73,6 +74,14 @@
   }
   const js=document.createElement('script');
   js.src='ux-v41.js?v=41';
+  js.async=false;
+  document.body.appendChild(js);
+})();
+
+// Assistência opcional de endereço: tenta descobrir bairro/CEP, mas nunca bloqueia o pedido.
+(function(){
+  const js=document.createElement('script');
+  js.src='address-assist.js?v=1';
   js.async=false;
   document.body.appendChild(js);
 })();
