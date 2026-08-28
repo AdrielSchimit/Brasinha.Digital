@@ -25,7 +25,7 @@ if not exist "config.json" (
   exit /b 1
 )
 
-reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\Run" /v "BrasinhaPrintAgent" /t REG_SZ /d "wscript.exe ""%~dp0run-hidden.vbs""" /f >nul
+powershell -NoProfile -ExecutionPolicy Bypass -Command "$run='wscript.exe \"%~dp0run-hidden.vbs\"'; New-ItemProperty -Path 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Run' -Name 'BrasinhaPrintAgent' -Value $run -PropertyType String -Force | Out-Null"
 if errorlevel 1 (
   echo [ERRO] Nao foi possivel configurar a inicializacao automatica.
   pause
@@ -34,6 +34,7 @@ if errorlevel 1 (
 
 echo [OK] Inicializacao automatica configurada para este usuario do Windows.
 echo [OK] O agente vai iniciar invisivel toda vez que este usuario entrar no Windows.
+echo [OK] Nao interfere no sistema que ja roda no PC.
 echo.
 echo Iniciando agora em segundo plano...
 start "" /b wscript.exe "%~dp0run-hidden.vbs"
