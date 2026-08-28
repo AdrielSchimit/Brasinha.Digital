@@ -5,7 +5,16 @@ const FREE_FOOD_IMAGES={
   gourmet:'https://images.unsplash.com/photo-1579751626657-72bc17010498?auto=format&fit=crop&w=900&q=82',
   veg:'https://images.unsplash.com/photo-1574071318508-1cdbab80d002?auto=format&fit=crop&w=900&q=82'
 };
-itemImage=function(group,name){
+
+function catalogMeta(raw){return raw?.[3]&&typeof raw[3]==='object'&&!Array.isArray(raw[3])?raw[3]:{};}
+function catalogActive(raw){return catalogMeta(raw).active!==false;}
+function catalogPrices(group,raw){return catalogMeta(raw).prices||group.prices||{M:0,G:0};}
+function safeText(value){return String(value??'').replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]));}
+function groupHasActiveItems(group){return [...(group.items||[]),...(group.extras||[])].some(catalogActive);}
+
+itemImage=function(group,name,raw){
+  const custom=catalogMeta(raw).image;
+  if(custom)return custom;
   if(/morango|brigadeiro|choco|m&m|banana|ouro/i.test(name))return FREE_FOOD_IMAGES.sweet;
   if(/pepperoni/i.test(name))return FREE_FOOD_IMAGES.pepperoni;
   if(/calabresa|baiana/i.test(name))return FREE_FOOD_IMAGES.classic;
@@ -13,7 +22,60 @@ itemImage=function(group,name){
   if(/rúcula|vegetar|brócolis|marguerita/i.test(name))return FREE_FOOD_IMAGES.veg;
   return CATEGORY_IMAGES[group.id]||FREE_FOOD_IMAGES.classic;
 };
+
+renderTabs=function(){
+  const groups=MENU.filter(groupHasActiveItems);
+  document.querySelector('#tabs').innerHTML=`<button class="tab active" data-target="all">Todos</button>${groups.map(g=>`<button class="tab" data-target="${safeText(g.id)}">${safeText(g.label)}</button>`).join('')}`;
+  document.querySelectorAll('.tab').forEach(b=>b.onclick=()=>{document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));b.classList.add('active');if(b.dataset.target==='all')document.querySelector('#cardapio').scrollIntoView({behavior:'smooth'});else document.querySelector('#'+b.dataset.target)?.scrollIntoView({behavior:'smooth',block:'start'});});
+};
+
+renderMenu=function(q=''){
+  const query=normalize(q);let rendered=0;document.querySelector('#menu').innerHTML='';
+  MENU.forEach(group=>{
+    let items=(group.items||[]).map(x=>({raw:x,name:x[0],desc:x[1],price:x[2],extra:false})).filter(i=>catalogActive(i.raw));
+    if(group.extras)items=items.concat(group.extras.map(x=>({raw:x,name:x[0],desc:x[1],price:x[2],extra:true})).filter(i=>catalogActive(i.raw)));
+    items=items.filter(i=>!query||normalize(`${i.name} ${i.desc} ${group.label}`).includes(query));
+    if(!items.length)return;rendered++;
+    const sec=document.createElement('section');sec.className='menu-group';sec.id=group.id;
+    const groupRule=group.kind==='pizza'?`M ${money(group.prices.M)} · G ${money(group.prices.G)}`:'';
+    sec.innerHTML=`<div class="group-head"><h3>${safeText(group.label)}</h3><small>${groupRule}</small></div><div class="menu-grid"></div>`;
+    const grid=sec.querySelector('.menu-grid');
+    items.forEach(item=>{
+      const meta=catalogMeta(item.raw),prices=catalogPrices(group,item.raw);
+      const card=document.createElement('article');card.className='menu-item';
+      const priceText=group.kind==='pizza'&&!item.extra?`M ${money(prices.M)} · G ${money(prices.G)}`:(item.price==null?'Consulte':money(item.price));
+      card.innerHTML=`<div class="item-img"><img loading="lazy" src="${safeText(itemImage(group,item.name,item.raw))}" alt="${safeText(item.name)}"></div><div class="item-body"><h4>${safeText(item.name)}</h4><p>${safeText(item.desc)}</p><div class="item-price">${priceText}</div><div class="item-actions"></div></div>`;
+      const acts=card.querySelector('.item-actions');
+      if(group.kind==='pizza'&&!item.extra){
+        acts.innerHTML='<button data-size="M">Média</button><button data-size="G">Grande</button><button class="primary" data-half>½ + ½</button>';
+        acts.querySelectorAll('[data-size]').forEach(b=>b.onclick=()=>addCart({type:'pizza',name:`Pizza ${item.name}`,detail:b.dataset.size==='M'?'Média':'Grande',price:prices[b.dataset.size]}));
+        acts.querySelector('[data-half]').onclick=()=>openBuilder(item.name);
+      }else if(item.price!=null){acts.innerHTML='<button class="primary">Adicionar</button>';acts.firstElementChild.onclick=()=>addCart({type:'item',name:item.name,detail:group.label,price:item.price});}
+      grid.appendChild(card);
+    });
+    document.querySelector('#menu').appendChild(sec);
+  });
+  if(!rendered)document.querySelector('#menu').innerHTML='<div class="empty-filter">Nenhum item encontrado.</div>';
+};
+
+function availableFlavors(){
+  return MENU.filter(g=>g.kind==='pizza').flatMap(g=>(g.items||[]).filter(catalogActive).map(raw=>({name:raw[0],desc:raw[1],category:g.label,categoryId:g.id,prices:catalogPrices(g,raw),image:itemImage(g,raw[0],raw),raw})));
+}
+fillBuilder=function(){
+  const currentA=document.querySelector('#flavorA')?.value,currentB=document.querySelector('#flavorB')?.value;
+  const options=availableFlavors().map(f=>`<option value="${safeText(f.name)}">${safeText(f.name)} · ${safeText(f.category)}</option>`).join('');
+  document.querySelector('#flavorA').innerHTML=options;document.querySelector('#flavorB').innerHTML=options;
+  if(currentA&&availableFlavors().some(f=>f.name===currentA))document.querySelector('#flavorA').value=currentA;
+  if(currentB&&availableFlavors().some(f=>f.name===currentB))document.querySelector('#flavorB').value=currentB;
+  const borders=(MENU.find(x=>x.id==='bordas')?.items||[]).filter(catalogActive);
+  document.querySelector('#pizzaBorder').innerHTML='<option value="">Sem borda adicional</option>'+borders.map(([n,,p])=>`<option value="${safeText(n)}">${safeText(n)} · +${money(p)}</option>`).join('');
+};
+flavor=function(name){return availableFlavors().find(f=>f.name===name);};
+borderPrice=function(name){if(!name)return 0;const borders=(MENU.find(x=>x.id==='bordas')?.items||[]).filter(catalogActive);return borders.find(x=>x[0]===name)?.[2]||0;};
+
+renderTabs();
 renderMenu(document.querySelector('#search')?.value||'');
+fillBuilder();
 
 // UX v3 — cadastro de uma única vez, validação e montagem segura.
 const profileBox=document.querySelector('#savedProfile');
