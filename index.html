@@ -6,14 +6,16 @@
   <meta name="theme-color" content="#0f0d0b" />
   <meta name="description" content="Cardápio digital da Brasinha Pizzaria & Chopperia — Água Clara/MS." />
   <title>Brasinha — Cardápio Digital</title>
-  <link rel="preload" href="assets/pizza-pepperoni.jpg" as="image" />
+  <link rel="icon" href="assets/logo.svg" type="image/svg+xml" />
+  <link rel="manifest" href="manifest.webmanifest" />
   <link rel="stylesheet" href="styles.css" />
+  <style>.hero{background-image:linear-gradient(90deg,rgba(10,9,8,.96) 0%,rgba(10,9,8,.82) 38%,rgba(10,9,8,.24) 72%,rgba(10,9,8,.6) 100%),linear-gradient(0deg,#0e0d0b 0%,transparent 28%),url('https://images.unsplash.com/photo-1574071318508-1cdbab80d002?auto=format&fit=crop&w=1800&q=85')!important}</style>
 </head>
 <body>
   <header class="hero" id="inicio">
     <nav class="topbar shell">
       <a class="brand" href="#inicio" aria-label="Brasinha">
-        <img src="assets/logo-brasinha-premium.png" alt="Brasinha Pizzaria & Chopperia" />
+        <img src="assets/logo.svg" alt="Brasinha Pizzaria & Chopperia" />
         <span><strong>BRASINHA</strong><small>Pizzaria & Chopperia</small></span>
       </a>
       <button class="cart-top" data-open-cart aria-label="Abrir pedido">Pedido <span data-cart-count>0</span></button>
@@ -44,7 +46,7 @@
         <div class="formula"><span>Calabresa R$ 60 ÷ 2</span><b>+</b><span>Gourmet R$ 80 ÷ 2</span><strong>= R$ 70</strong></div>
         <button class="button button-gold" data-open-builder>Montar minha pizza</button>
       </div>
-      <div class="spotlight-photo"><img src="assets/pizza-borda.jpg" alt="Pizza Brasinha com borda recheada" /></div>
+      <div class="spotlight-photo"><img src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&w=1200&q=85" alt="Pizza artesanal" /></div>
     </section>
 
     <section class="shell menu-wrap" id="cardapio">
@@ -57,7 +59,7 @@
     </section>
 
     <section class="shell dessert-banner">
-      <img src="assets/pizza-morango.jpg" alt="Pizza doce de chocolate com morango" />
+      <img src="https://images.unsplash.com/photo-1579751626657-72bc17010498?auto=format&fit=crop&w=1200&q=85" alt="Pizza artesanal" />
       <div><p class="eyebrow">PARA FECHAR</p><h2>Tem doce também.</h2><p>Chocolate, morango, banana, M&M, Ouro Branco e opções de calzone.</p><a href="#doces">Ver doces</a></div>
     </section>
 
@@ -113,6 +115,6 @@
   </div>
 
   <footer><div class="shell"><strong>BRASINHA</strong><span>Pizzaria & Chopperia · Água Clara/MS</span></div></footer>
-  <script src="data.js"></script><script src="app.js"></script>
+  <script src="data.js"></script><script src="assets-overrides.js"></script><script src="app.js"></script>
 </body>
 </html>
