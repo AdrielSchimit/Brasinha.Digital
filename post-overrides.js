@@ -48,12 +48,23 @@ function profileComplete(){
   const basic=d.name&&digits(d.phone).length>=10;
   return fulfillment==='Retirada'?basic:basic&&d.street&&d.number&&d.neighborhood;
 }
+function appendProfileLine(text,className){
+  const el=document.createElement('span');
+  if(className)el.className=className;
+  el.textContent=text;
+  profileBox.appendChild(el);
+}
 function refreshProfile(forceOpen=false){
   const d=profileData();
   const complete=profileComplete();
   if(forceOpen)profileEditing=true;
   if(complete&&!profileEditing){
-    profileBox.innerHTML=`<span class="saved-ok">✓ Dados salvos</span><strong>${d.name}</strong><span>${d.phone}</span>${fulfillment==='Entrega'?`<span>${d.street}, ${d.number} · ${d.neighborhood}${d.reference?` · ${d.reference}`:''}</span>`:'<span>Retirada no balcão</span>'}`;
+    profileBox.replaceChildren();
+    appendProfileLine('✓ Dados salvos','saved-ok');
+    const name=document.createElement('strong');name.textContent=d.name;profileBox.appendChild(name);
+    appendProfileLine(d.phone);
+    if(fulfillment==='Entrega')appendProfileLine(`${d.street}, ${d.number} · ${d.neighborhood}${d.reference?` · ${d.reference}`:''}`);
+    else appendProfileLine('Retirada no balcão');
     profileBox.classList.remove('hidden');
     editProfileBtn.classList.remove('hidden');
     customerForm.classList.add('customer-form-collapsed');
@@ -65,12 +76,9 @@ function refreshProfile(forceOpen=false){
 }
 editProfileBtn.addEventListener('click',()=>{profileEditing=true;refreshProfile(true);document.querySelector('#customerName').focus();});
 
-// Ao trocar Entrega/Retirada, reavalia quais dados são realmente necessários.
 document.querySelectorAll('#fulfillment button').forEach(btn=>btn.addEventListener('click',()=>{profileEditing=false;setTimeout(()=>refreshProfile(),0);}));
-// Sempre que abrir o pedido, se já houver cadastro completo, mostra apenas o resumo.
 document.querySelectorAll('[data-open-cart]').forEach(btn=>btn.addEventListener('click',()=>{profileEditing=false;setTimeout(()=>refreshProfile(),0);}));
 
-// Telefone passa a ser obrigatório e campos inválidos são destacados.
 validateCheckout=function(){
   document.querySelectorAll('.form-grid input').forEach(i=>i.classList.remove('invalid'));
   if(!cart.length)return 'Adicione pelo menos um item ao pedido.';
@@ -85,7 +93,6 @@ validateCheckout=function(){
   return '';
 };
 
-// Evita uma "meia a meia" com o mesmo sabor dos dois lados.
 const originalAddBuiltPizza=addBuiltPizza;
 document.querySelector('#addPizza').onclick=()=>{
   if(builderMode==='half'&&document.querySelector('#flavorA').value===document.querySelector('#flavorB').value){
@@ -95,7 +102,6 @@ document.querySelector('#addPizza').onclick=()=>{
   originalAddBuiltPizza();
 };
 
-// Reforça visualmente que a borda é adicional e já entra no total.
 document.querySelector('#pizzaBorder').addEventListener('change',()=>{
   const selected=document.querySelector('#pizzaBorder').value;
   if(selected)document.querySelector('#pizzaBreakdown').setAttribute('aria-label','Borda adicionada ao total da pizza');
