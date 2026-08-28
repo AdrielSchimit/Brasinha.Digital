@@ -1,4 +1,4 @@
-// Envia uma cópia do pedido para a fila de impressão sem impedir o WhatsApp.
+// Envia uma cópia estruturada do pedido para a fila de impressão sem impedir o WhatsApp.
 (function(){
   const originalBuildMessage = buildWhatsAppMessage;
 
@@ -11,12 +11,24 @@
     return `${y}${m}${d}-${t}-${Math.random().toString(36).slice(2,6).toUpperCase()}`;
   }
 
+  function serializeItem(item){
+    const upgraded=window.brasinhaUpgradeItem?window.brasinhaUpgradeItem(item):item;
+    return {
+      name:upgraded.name,
+      detail:upgraded.detail||'',
+      qty:Number(upgraded.qty||1),
+      price:Number(upgraded.price||0),
+      components:upgraded.components||null
+    };
+  }
+
   function snapshotOrder(){
     const fee = getDeliveryFee();
     const sub = subtotal();
     return {
       id: makeOrderId(),
-      source: 'brasinha-web-v1',
+      source: 'brasinha-web-v2',
+      createdAt: new Date().toISOString(),
       customer: {
         name: document.querySelector('#customerName').value.trim(),
         phone: document.querySelector('#customerPhone').value.trim(),
@@ -30,11 +42,15 @@
       payment,
       cashChange: document.querySelector('#cashChange').value.trim(),
       notes: document.querySelector('#orderNotes').value.trim(),
-      items: cart.map(i=>({ name:i.name, detail:i.detail||'', qty:Number(i.qty||1), price:Number(i.price||0) })),
+      items: cart.map(serializeItem),
       subtotal: sub,
       deliveryFee: fee,
       total: sub + (fee || 0)
     };
+  }
+
+  function message(){
+    return window.brasinhaBuildWhatsAppMessageV2?window.brasinhaBuildWhatsAppMessageV2():originalBuildMessage();
   }
 
   async function queuePrint(order){
@@ -57,31 +73,32 @@
     saveCustomer();
     const order = snapshotOrder();
     queuePrint(order);
-    window.open(`https://wa.me/${BRASINHA_CONFIG.whatsapp}?text=${encodeURIComponent(originalBuildMessage())}`,'_blank','noopener');
+    window.open(`https://wa.me/${BRASINHA_CONFIG.whatsapp}?text=${encodeURIComponent(message())}`,'_blank','noopener');
   };
 
   const button = document.querySelector('#sendOrder');
   if(button) button.onclick = sendOrder;
 })();
 
-// UX V4.1: interface guiada e estável; impressão continua independente.
+// Carrega primeiro o formatador estruturado; depois a UX guiada.
 (function(){
-  if(!document.querySelector('link[href="ux-v41.css"]')){
-    const css=document.createElement('link');
-    css.rel='stylesheet';
-    css.href='ux-v41.css?v=41';
-    document.head.appendChild(css);
+  function load(src,onload){
+    const js=document.createElement('script');
+    js.src=src;
+    js.async=false;
+    if(onload) js.onload=onload;
+    document.body.appendChild(js);
   }
-  const js=document.createElement('script');
-  js.src='ux-v41.js?v=41';
-  js.async=false;
-  document.body.appendChild(js);
-})();
 
-// Assistência opcional de endereço: tenta descobrir bairro/CEP, mas nunca bloqueia o pedido.
-(function(){
-  const js=document.createElement('script');
-  js.src='address-assist.js?v=1';
-  js.async=false;
-  document.body.appendChild(js);
+  load('order-format-v2.js?v=2',()=>{
+    if(!document.querySelector('link[href^="ux-v41.css"]')){
+      const css=document.createElement('link');
+      css.rel='stylesheet';
+      css.href='ux-v41.css?v=41';
+      document.head.appendChild(css);
+    }
+    load('ux-v41.js?v=41',()=>{
+      load('address-assist.js?v=1');
+    });
+  });
 })();
