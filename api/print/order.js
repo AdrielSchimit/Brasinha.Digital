@@ -20,12 +20,46 @@ function cleanText(value, max = 220) {
   return String(value ?? '').replace(/[\u0000-\u001f\u007f]/g, ' ').trim().slice(0, max);
 }
 
+function moneyNumber(value) {
+  return Math.max(0, Number(value) || 0);
+}
+
+function normalizeComponents(value) {
+  if (!value || typeof value !== 'object' || value.kind !== 'pizza') return null;
+
+  const flavors = Array.isArray(value.flavors)
+    ? value.flavors.slice(0, 2).map(flavor => ({
+        name: cleanText(flavor?.name, 100),
+        fullPrice: moneyNumber(flavor?.fullPrice),
+        chargedPrice: moneyNumber(flavor?.chargedPrice)
+      })).filter(flavor => flavor.name)
+    : [];
+
+  const border = value.border && typeof value.border === 'object' && cleanText(value.border.name, 100)
+    ? {
+        name: cleanText(value.border.name, 100),
+        price: moneyNumber(value.border.price)
+      }
+    : null;
+
+  return {
+    kind: 'pizza',
+    mode: value.mode === 'half' ? 'half' : 'full',
+    size: value.size === 'G' ? 'G' : 'M',
+    sizeLabel: value.size === 'G' ? 'Grande' : 'Média',
+    flavors,
+    border,
+    unitTotal: moneyNumber(value.unitTotal)
+  };
+}
+
 function normalizeOrder(body) {
   const items = Array.isArray(body?.items) ? body.items.slice(0, MAX_ITEMS).map(item => ({
     name: cleanText(item?.name, 120),
     detail: cleanText(item?.detail, 220),
     qty: Math.max(1, Math.min(99, Number(item?.qty) || 1)),
-    price: Math.max(0, Number(item?.price) || 0)
+    price: moneyNumber(item?.price),
+    components: normalizeComponents(item?.components)
   })).filter(item => item.name) : [];
 
   if (!items.length) throw Object.assign(new Error('Pedido sem itens.'), { status: 400 });
@@ -33,7 +67,7 @@ function normalizeOrder(body) {
   const customer = body?.customer || {};
   const order = {
     id: cleanText(body?.id, 80) || crypto.randomUUID(),
-    source: 'brasinha-web-v1',
+    source: 'brasinha-web-v2',
     createdAt: new Date().toISOString(),
     customer: {
       name: cleanText(customer.name, 100),
@@ -41,6 +75,7 @@ function normalizeOrder(body) {
       street: cleanText(customer.street, 160),
       number: cleanText(customer.number, 40),
       neighborhood: cleanText(customer.neighborhood, 100),
+      cep: cleanText(customer.cep, 20),
       reference: cleanText(customer.reference, 180)
     },
     fulfillment: body?.fulfillment === 'Retirada' ? 'Retirada' : 'Entrega',
@@ -48,9 +83,9 @@ function normalizeOrder(body) {
     cashChange: cleanText(body?.cashChange, 60),
     notes: cleanText(body?.notes, 350),
     items,
-    subtotal: Math.max(0, Number(body?.subtotal) || 0),
-    deliveryFee: body?.deliveryFee == null ? null : Math.max(0, Number(body.deliveryFee) || 0),
-    total: Math.max(0, Number(body?.total) || 0)
+    subtotal: moneyNumber(body?.subtotal),
+    deliveryFee: body?.deliveryFee == null ? null : moneyNumber(body.deliveryFee),
+    total: moneyNumber(body?.total)
   };
 
   if (!order.customer.name) throw Object.assign(new Error('Cliente sem nome.'), { status: 400 });
