@@ -1,5 +1,6 @@
 const crypto = require('crypto');
 const { github, sendJson } = require('../../lib/admin-server');
+const { isOpenAt, status: businessStatus } = require('../../lib/business-hours');
 
 const QUEUE_ISSUE = Number(process.env.PRINT_QUEUE_ISSUE || 1);
 const MAX_ITEMS = 60;
@@ -94,6 +95,17 @@ function normalizeOrder(body) {
 
 module.exports = async function handler(req, res) {
   if (req.method !== 'POST') return sendJson(res, 405, { error: 'Método não permitido.' });
+
+  const now = new Date();
+  if (!isOpenAt(now)) {
+    const store = businessStatus(now);
+    return sendJson(res, 403, {
+      error: 'A Brasinha está fechada agora.',
+      code: 'STORE_CLOSED',
+      schedule: store.schedule,
+      nextOpen: store.nextOpen
+    });
+  }
 
   const secret = process.env.PRINT_QUEUE_SECRET || '';
   if (!secret) return sendJson(res, 503, { error: 'Fila de impressão ainda não configurada.' });
