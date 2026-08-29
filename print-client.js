@@ -90,6 +90,9 @@
     document.body.appendChild(js);
   }
 
+  // A trava de horário é independente da UX e usa status do servidor.
+  load('business-hours.js?v=1');
+
   load('order-format-v2.js?v=2',()=>{
     if(!document.querySelector('link[href^="ux-v41.css"]')){
       const css=document.createElement('link');
